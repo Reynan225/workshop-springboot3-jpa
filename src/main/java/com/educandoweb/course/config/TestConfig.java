@@ -11,7 +11,8 @@ import java.util.Arrays;
 
 @Configuration // Marca a classe como configuração do Spring
 @Profile("test") // Só ativa essa configuração quando o perfil "test" estiver ativo
-public class TestConfig implements CommandLineRunner {
+public class TestConfig implements CommandLineRunner { // CommandLineRunner executar código de inicialização,
+                                                      // quando a aplicação sobe
 
     @Autowired // Injeta automaticamente a implementação de UserRepository
     private UserRepository userRepository;

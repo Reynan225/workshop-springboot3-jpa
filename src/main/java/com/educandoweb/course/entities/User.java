@@ -1,5 +1,6 @@
 package com.educandoweb.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -22,6 +23,10 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
+    // Evita loop infinito na serialização JSON:
+// sem isso, ao converter User em JSON, ele tentaria serializar User,
+// que por sua vez serializaria novamente o order, e assim sucessivamente.
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 

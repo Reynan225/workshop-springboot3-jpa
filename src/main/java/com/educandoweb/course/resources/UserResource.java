@@ -1,7 +1,6 @@
 package com.educandoweb.course.resources;
 
 import com.educandoweb.course.entities.User;
-import com.educandoweb.course.repositories.UserRepository;
 import com.educandoweb.course.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 // Indica que esta classe é um REST Controller, ou seja, ela vai tratar requisições HTTP e retornar JSON
@@ -56,5 +54,11 @@ public class UserResource {
                  .toUri(); // Converte para URI, que será usada no header Location
 
         return ResponseEntity.created(uri).body(obj);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.deleted(id);
+        return ResponseEntity.noContent().build();
     }
 }

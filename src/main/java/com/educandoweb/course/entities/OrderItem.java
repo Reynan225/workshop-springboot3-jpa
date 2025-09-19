@@ -63,6 +63,10 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    public double getSubtotal() { //detalhe, para aparecer o resultado no JSON, temos que colocar o get
+        return price * quantity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

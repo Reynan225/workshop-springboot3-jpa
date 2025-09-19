@@ -95,6 +95,11 @@ public class Order implements Serializable {
         this.payment = payment;
     }
 
+    public double getTotal() {
+
+        return items.stream().mapToDouble(OrderItem :: getSubtotal).sum();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

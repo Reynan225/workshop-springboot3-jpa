@@ -29,15 +29,15 @@ public class Order implements Serializable {
     @JoinColumn(name = "cliente_id")
     private User client;
 
-    // Um pedido possui vários itens (OrderItem)
-// O "mappedBy" indica qual atributo do lado de OrderItem faz o vínculo
-// Aqui é "id.order", ou seja:
-//   - dentro de OrderItem existe um atributo chamado "id" (OrderItemPk)
-//   - e dentro de "id" existe um atributo chamado "order"
-// Isso diz ao JPA que o lado "dono da relação" é o OrderItem (através do id.order),
-// e que a tabela de OrderItem terá a FK de Order (não a tabela de Order).
     @OneToMany(mappedBy = "id.order")
+    // Relacionamento 1:N com OrderItem
+    // 'id.order' indica que o mapeamento está na chave composta OrderItemPk
     private Set<OrderItem> items = new HashSet<>();
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    // Relacionamento 1:1 com Payment
+    // cascade ALL garante que operações em Order se propaguem para Payment
+    private Payment payment;
 
     public Order() {
     }
@@ -85,6 +85,14 @@ public class Order implements Serializable {
 
     public Set<OrderItem> getItems() {
         return items;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     @Override

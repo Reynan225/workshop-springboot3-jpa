@@ -1,11 +1,14 @@
 package com.educandoweb.course.entities;
 
+import com.educandoweb.course.entities.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "tb_product")
@@ -29,6 +32,9 @@ public class Product implements Serializable {
 // Mapeamento muitos-para-muitos entre Product e Category.
 // Cria a tabela intermediária "tb_product_category" com as colunas
 // "product_id" (referência para Product) e "category_id" (referência para Category).
+
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Product() {}
 
@@ -82,6 +88,13 @@ public class Product implements Serializable {
 
     public Set<Category> getCategories() {
         return categories;
+    }
+
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        Set<Order> set = items.stream().map(OrderItem :: getOrder)
+                .collect(Collectors.toCollection(HashSet::new));
+    return set;
     }
 
     @Override

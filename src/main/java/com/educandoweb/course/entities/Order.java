@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_Order") // Evitar confrito
@@ -26,6 +28,16 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private User client;
+
+    // Um pedido possui vários itens (OrderItem)
+// O "mappedBy" indica qual atributo do lado de OrderItem faz o vínculo
+// Aqui é "id.order", ou seja:
+//   - dentro de OrderItem existe um atributo chamado "id" (OrderItemPk)
+//   - e dentro de "id" existe um atributo chamado "order"
+// Isso diz ao JPA que o lado "dono da relação" é o OrderItem (através do id.order),
+// e que a tabela de OrderItem terá a FK de Order (não a tabela de Order).
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Order() {
     }
@@ -69,6 +81,10 @@ public class Order implements Serializable {
 
     public void setClient(User client) {
         this.client = client;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
     }
 
     @Override

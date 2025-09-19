@@ -22,6 +22,8 @@ public class OrderItemPk implements Serializable {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    public OrderItemPk() {}
+
     public Order getOrder() {
         return order;
     }

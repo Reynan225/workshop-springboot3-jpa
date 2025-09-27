@@ -19,7 +19,6 @@ public class UserResource {
     @Autowired
     private UserService service;
 
-    // Indica que este método responde a requisições GET em /users
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
        List<User> users = service.findAll();
@@ -60,5 +59,11 @@ public class UserResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deleted(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj) {
+    obj = service.update(id, obj);
+    return ResponseEntity.ok().body(obj);
     }
 }

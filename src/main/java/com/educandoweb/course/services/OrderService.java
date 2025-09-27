@@ -21,6 +21,6 @@ public class OrderService {
     public Order findById(Long id) {
 
         return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Order with id " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 }

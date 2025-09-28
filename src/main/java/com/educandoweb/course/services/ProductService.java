@@ -1,7 +1,7 @@
 package com.educandoweb.course.services;
 
 import com.educandoweb.course.entities.Product;
-import com.educandoweb.course.exceptions.ResourceNotFoundException;
+import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
 import com.educandoweb.course.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
